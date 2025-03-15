@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import zod from "zod";
 import dotenv from "dotenv";
-import { Content, Users } from "./db";
+import { Content, Link, Users } from "./db";
 import bcrypt from "bcrypt";
 import { authMiddleware } from "./authMiddleware";
 
@@ -165,6 +165,85 @@ app.get(
       return res.status(500).json({
         message: "Internal server error",
       });
+    }
+  }
+);
+
+app.delete(
+  "/api/v1/delete-content",
+  authMiddleware,
+  async (req: Request, res: Response): Promise<any> => {
+    const { contentId } = req.body;
+    try {
+      if (!contentId) {
+        return res.status(403).json({ message: "Content id is required" });
+      }
+
+      const deleteContent = await Content.findByIdAndDelete(contentId);
+      if (!deleteContent) {
+        return res.status(404).json({ message: "Content not found" });
+      }
+
+      return res
+        .status(200)
+        .json({ message: "Content deleted", deleteContent });
+    } catch (err) {
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+);
+
+app.post(
+  "/api/v1/brain/share",
+  authMiddleware,
+  async (req: Request, res: Response): Promise<any> => {
+    const { share } = req.body;
+    const userId = (req as any).userId;
+
+    if (share) {
+      const hash = Math.random().toString(36).substring(2, 15);
+      const shareableLink = `share/${hash}`;
+
+      await Link.create({
+        userId: userId,
+        hash: hash,
+      });
+
+      return res.status(200).json({
+        message: "share link created",
+        shareableLink,
+      });
+    } else {
+      //delete link from Link table
+      await Link.findOneAndDelete({ userId: userId });
+      return res.status(200).json({
+        message: "Shareable link deleted",
+      });
+    }
+  }
+);
+
+//get Share link
+
+app.get(
+  "/api/v1/brain/:shareLink",
+  async (req: Request, res: Response): Promise<any> => {
+    try {
+      const shareableLink = req.params.shareLink;
+
+      const link = await Link.findOne({ hash: shareableLink });
+
+      if (!link) {
+        return res.status(404).json({ message: "Invalid Link" });
+      }
+      const contents = (await Content.find({ userId: link.userId })) || []; //if content being null
+
+      return res.status(200).json({
+        message: "Shareable content fetched",
+        contents,
+      });
+    } catch (err) {
+      return res.status(500).json({ message: "Internal server error" });
     }
   }
 );
