@@ -1,5 +1,6 @@
-import React, { ReactElement } from "react";
+import { TwitterEmbed } from "../embeds/TwitterEmbed";
 import { ShareIcon } from "../icons/ShareIcon";
+import { OpenIcon } from "../icons/OpenIcon";
 
 interface CardProps {
   link: string;
@@ -8,7 +9,7 @@ interface CardProps {
 }
 export const Cards = ({ link, title, type }: CardProps) => {
   return (
-    <div className="bg-white rounded-md shadow-md border-slate-100 border max-w-72 min-w-72 sm:max-w-72 min-w-72 h-auto">
+    <div className="bg-white rounded-md shadow-md border-slate-100 border max-w-72 min-w-72 sm:max-w-72  h-auto transition-all duration-100 hover:scale-105">
       <div className="flex justify-between">
         <div className="mx-2 my-1 flex gap-2 items-center">
           <ShareIcon />
@@ -16,7 +17,7 @@ export const Cards = ({ link, title, type }: CardProps) => {
         </div>
         <div className="mx-2 my-1 flex gap-2 items-center">
           <a href={link} target="_blank">
-            <ShareIcon />
+            <OpenIcon />
           </a>
           <ShareIcon />
         </div>
@@ -24,7 +25,7 @@ export const Cards = ({ link, title, type }: CardProps) => {
       <div className="m-1 pt-2">
         {type === "youtube" && (
           <iframe
-            className="w-full aspect-video rounded-md"
+            className="w-full aspect-video rounded-md mt-3"
             src={link.replace("watch?v=", "embed/")}
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -32,11 +33,7 @@ export const Cards = ({ link, title, type }: CardProps) => {
             allowFullScreen
           ></iframe>
         )}
-        {type === "twitter" && (
-          <blockquote className="twitter-tweet">
-            <a href={link.replace("x.com", "twitter.com")}></a>
-          </blockquote>
-        )}
+        {type === "twitter" && <TwitterEmbed link={link} />}
       </div>
     </div>
   );

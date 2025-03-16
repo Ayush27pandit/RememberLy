@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
 });
 
 //CONTENT
-const contentType = ["image", "video", "article", "audio"];
+const contentType = ["youtube", "twitter"];
 const contentSchema = new mongoose.Schema({
   link: { type: String, required: true },
   type: { type: String, enum: contentType, required: true },

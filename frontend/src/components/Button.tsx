@@ -13,7 +13,7 @@ const variantClasses = {
 };
 
 const defaultClasses =
-  "px-4 py-2 rounded-md font-normal flex items-center justify-center gap-1  ";
+  "px-4 py-2 rounded-lg shadow-md font-semibold flex items-center justify-center gap-1  ";
 export function Button({ variant, text, startIcon, onClick }: ButtonProps) {
   return (
     <button

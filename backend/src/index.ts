@@ -6,12 +6,14 @@ import dotenv from "dotenv";
 import { Content, Link, Users } from "./db";
 import bcrypt from "bcrypt";
 import { authMiddleware } from "./authMiddleware";
+import cors from "cors";
 
 dotenv.config({ path: "./src/.env" });
 
 const jwt_string = process.env.JWT_SECRET as string;
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -67,7 +69,7 @@ app.post(
   }
 );
 
-const singinBody = zod.object({
+const signInBody = zod.object({
   username: zod.string().email(),
   password: zod.string().min(8, "Length of password minimum 8characters"),
 });
@@ -76,7 +78,7 @@ app.post(
   "/api/v1/signin",
   async (req: Request, res: Response): Promise<any> => {
     try {
-      const { success, error } = await singinBody.safeParseAsync(req.body);
+      const { success, error } = await signInBody.safeParseAsync(req.body);
 
       if (!success) {
         return res.status(403).json({
@@ -102,8 +104,12 @@ app.post(
         );
 
         return res.status(200).json({
-          message: "User signed-up successful",
+          message: "User signed-in successful",
           token,
+        });
+      } else {
+        return res.status(403).json({
+          message: "Incorrect password",
         });
       }
     } catch (err) {
