@@ -1,5 +1,3 @@
-// import { useState } from "react"; // ✅ Import useState
-
 import { Button } from "../components/Button";
 import { PlusIcon } from "../icons/PlusIcon";
 import { ShareIcon } from "../icons/ShareIcon";
@@ -35,7 +33,7 @@ export function Dashboard() {
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4 max-w-[900px] ml-0  ">
+        <div className="flex gap-4 flex-wrap ">
           {contents.map(({ type, link, title }) => (
             <Cards link={link} title={title} type={type} />
           ))}

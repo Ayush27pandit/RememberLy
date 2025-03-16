@@ -1,6 +1,7 @@
 import { TwitterEmbed } from "../embeds/TwitterEmbed";
 import { ShareIcon } from "../icons/ShareIcon";
 import { OpenIcon } from "../icons/OpenIcon";
+import { DeleteIcon } from "../icons/DeleteIcon";
 
 interface CardProps {
   link: string;
@@ -19,7 +20,9 @@ export const Cards = ({ link, title, type }: CardProps) => {
           <a href={link} target="_blank">
             <OpenIcon />
           </a>
-          <ShareIcon />
+          <a href="" className="hover:cursor-pointer">
+            <DeleteIcon />
+          </a>
         </div>
       </div>
       <div className="m-1 pt-2">
