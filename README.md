@@ -1,111 +1,144 @@
-# Full Stack Web Application
+# BrainWave 🧠 - Full Stack Web Application
 
-## 🌟 Overview
-This project is a full-stack web application built with a modern tech stack, providing seamless functionality and an intuitive user interface.
+## 🚀 Project Overview
+BrainWave is a modern full-stack web application that allows users to manage and interact with content from platforms like Twitter and YouTube. The project leverages React with TypeScript for the frontend and Node.js with Express for the backend, with MongoDB as the database.
 
-## 🚀 Features
-- User authentication (Signup/Login)
-- Secure token-based authentication (JWT)
-- Content management
-- Real-time updates
-- Responsive UI
-- Database integration with MongoDB
+---
 
 ## 🛠️ Tech Stack
+
 ### Frontend
-- Vite with React (TypeScript)
+- React (Vite with TypeScript)
 - Tailwind CSS
-- Axios for API handling
 
 ### Backend
-- Node.js with Express
+- Node.js
+- Express.js
 - TypeScript
-- MongoDB with Mongoose
-- JSON Web Token (JWT) authentication
+- MongoDB
+- Zod for validation
+- JWT for authentication
 - Bcrypt for password hashing
-- CORS for cross-origin requests
-- Zod for input validation
 
-## 📂 Project Structure
+---
+
+## 🌲 Project Structure
 ```
-backend/
+BrainWave/
 │
-├── src/
-│   ├── index.ts
-│   ├── routes/
-│   ├── controllers/
-│   ├── models/
-│   ├── middlewares/
-│   └── utils/
+├── frontend/  (React + Vite)
+│   └── src/
+│       ├── components/
+│       ├── hooks/
+│       ├── icons/
+│       ├── pages/
+│       ├── modals/
+│       └── App.tsx
 │
-├── .env
-├── tsconfig.json
-├── package.json
-└── README.md
-
-frontend/
+├── backend/
+│   ├── src/
+│   │   ├── index.ts
+│   │   ├── routes/
+│   │   ├── controllers/
+│   │   └── middlewares/
+│   ├── dist/ (Generated after build)
+│   ├── .env
+│   └── package.json
 │
-├── src/
-│   ├── components/
-│   ├── hooks/
-│   ├── pages/
-│   ├── utils/
-│   ├── App.tsx
-│   └── main.tsx
-│
-├── vite.config.ts
-├── package.json
 └── README.md
 ```
 
-## 🌐 Backend Setup (Render Deployment)
-1. Install dependencies:
+---
+
+## 📦 Backend Setup
+
+### Installation
+
+1. Navigate to the backend directory:
+```bash
+cd backend
+```
+
+2. Install dependencies:
 ```bash
 npm install
 ```
-2. Build the project:
-```bash
-npm run build
-```
-3. Run the project locally:
-```bash
-npm run dev
-```
-4. For Render deployment, set the **Root Directory** to `backend/`.
 
-## 🎯 Frontend Setup (Vercel Deployment)
-1. Install dependencies:
-```bash
-npm install
-```
-2. Run the project locally:
-```bash
-npm run dev
-```
-3. Deploy to Vercel by selecting the frontend directory.
-
-## 🛡️ Environment Variables
-Create a `.env` file inside the `src` folder for the backend:
-```
+3. Set up the environment variables in `.env` file:
+```env
 PORT=5000
-MONGO_URI=<your-mongodb-uri>
-JWT_SECRET=<your-jwt-secret>
+MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/brainwave
+JWT_SECRET=mysecretkey
 ```
 
-## 🌄 Screenshots
-- Login Page
-- Dashboard
-- Content Cards
+4. Build and Run the project:
+```bash
+npm run dev
+```
 
-## 🚀 Future Enhancements
-- Dark Mode
-- Social Media Authentication
-- User Roles and Permissions
+---
 
-## 🤝 Contributors
-- Your Name
-- Other Contributors
+## 🖼️ Frontend Setup
 
-## 📜 License
-This project is licensed under the MIT License.
+1. Navigate to the frontend directory:
+```bash
+cd frontend
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Run the app:
+```bash
+npm run dev
+```
+
+The frontend will run on `http://localhost:5173`
+
+---
+
+## 🛳️ Deployment
+
+### Vercel (Frontend)
+1. Go to Vercel Dashboard and import the frontend repository.
+2. Select the root directory as `frontend`.
+3. Add environment variables in Vercel settings.
+4. Deploy!
+
+### Render (Backend)
+1. Go to Render Dashboard and create a new Web Service.
+2. Select the backend repository.
+3. Set the root directory as `backend`.
+4. Add the environment variables.
+5. Deploy!
+
+---
+
+## 🔑 Features
+- User Authentication (Signup & Login)
+- Secure JWT-based Authentication
+- Content Management (Twitter & YouTube Embeds)
+- Responsive Dashboard UI
+- Smooth Modal for Adding Content
+
+---
+
+## 🎯 Future Enhancements
+- Social Media Sharing
+- Dark Mode Support
+- AI-based Content Suggestions
+
+---
+
+## 🙌 Contribution
+
+Contributions are welcome! Feel free to open issues or submit pull requests.
+
+
+---
+
+## ⭐️ Show Your Support
+If you liked this project, give it a ⭐️!
 
