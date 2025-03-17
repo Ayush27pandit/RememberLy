@@ -2,12 +2,19 @@ import { useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+
 export const AuthPage = ({ setIsAuthenticated }) => {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [errors, setErrors] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
 
   const toggleAuthMode = () => {
     setIsSignUp((prev) => !prev);
+    setErrors({ email: "", password: "" }); // Clear errors when toggling
   };
 
   const handleAuth = async (e) => {
@@ -16,9 +23,11 @@ export const AuthPage = ({ setIsAuthenticated }) => {
     const formData = new FormData(e.target);
     const username = formData.get("email");
     const password = formData.get("password");
+
     try {
+      setLoading(true); // Start loading
       const endpoint = isSignUp
-        ? `${BACKEND_URL}/api/v1/signup `
+        ? `${BACKEND_URL}/api/v1/signup`
         : `${BACKEND_URL}/api/v1/signin`;
       const response = await axios.post(
         endpoint,
@@ -32,19 +41,21 @@ export const AuthPage = ({ setIsAuthenticated }) => {
 
       if (response.status === 200) {
         const { token } = response.data;
-        console.log(token);
         localStorage.setItem("token", token);
         setIsAuthenticated(true);
         navigate("/dashboard");
-        console.log("Auth success", response.data);
-      } else {
-        console.log("Auth failed", response.data);
       }
     } catch (error) {
-      console.error(
-        "Error during authentication:",
-        error.response?.data || error.message
-      );
+      const errorMsg = error.response?.data?.message || "Something went wrong!";
+      if (errorMsg.toLowerCase().includes("email")) {
+        setErrors({ email: errorMsg, password: "" });
+      } else if (errorMsg.toLowerCase().includes("password")) {
+        setErrors({ email: "", password: errorMsg });
+      } else {
+        setErrors({ email: "", password: errorMsg });
+      }
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -56,24 +67,54 @@ export const AuthPage = ({ setIsAuthenticated }) => {
         </h2>
 
         <form className="space-y-4" onSubmit={handleAuth}>
+          {/* Email Input */}
           <input
             type="email"
             name="email"
             placeholder="Email"
             className="w-full px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-purple-500"
           />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            className="w-full px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-purple-500"
-          />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email}</p>
+          )}
 
+          {/* Password Input with View Password Icon */}
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              className="w-full px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-purple-500"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-4 top-3 text-gray-500 cursor-pointer"
+            >
+              {showPassword ? (
+                <AiOutlineEyeInvisible size={20} />
+              ) : (
+                <AiOutlineEye size={20} />
+              )}
+            </button>
+          </div>
+          {errors.password && (
+            <p className="text-red-500 text-sm">{errors.password}</p>
+          )}
+
+          {/* Submit Button with Loading Spinner */}
           <button
             type="submit"
-            className="w-full bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 hover:cursor-pointer transition"
+            className="w-full bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 hover:cursor-pointer transition flex items-center justify-center"
+            disabled={loading}
           >
-            {isSignUp ? "Sign Up" : "Sign In"}
+            {loading ? (
+              <div className="animate-spin h-5 w-5 border-t-2 border-white rounded-full mr-2"></div>
+            ) : isSignUp ? (
+              "Sign Up"
+            ) : (
+              "Sign In"
+            )}
           </button>
         </form>
 
