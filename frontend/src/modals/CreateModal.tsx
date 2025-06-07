@@ -12,11 +12,11 @@ export const CreateModal = ({
   open: boolean;
   onClose: () => void;
 }) => {
-  if (!open) return null;
-
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
   const [type, setType] = useState("youtube");
+
+  if (!open) return null;
 
   const HandleSubmit = async () => {
     console.log(title, link);
