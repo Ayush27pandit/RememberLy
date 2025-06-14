@@ -6,14 +6,14 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import { Dashboard } from "./pages/Dashboard";
-import { AuthPage } from "./pages/Auth";
-import LandingPage from "./pages/LandingPage";
 import { ThemeProvider } from "./components/context/ThemeContext";
-import DashboardLayout from "./pages/DashboardLayout";
 import Twitter from "./components/dashboardpages/Twitter";
 import Youtube from "./components/dashboardpages/Youtube";
 import AskAi from "./components/dashboardpages/AskAi";
+import { AuthPage } from "./pages/Auth";
+import { Dashboard } from "./pages/Dashboard";
+import LandingPage from "./pages/LandingPage";
+import DashboardLayout from "./pages/DashboardLayout";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
