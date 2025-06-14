@@ -12,6 +12,7 @@ interface CardProps {
   link: string;
   title: string;
   type: "twitter" | "youtube";
+  createdAt: string;
 }
 export const Cards = React.memo(
   ({ contentId, link, title, type }: CardProps) => {

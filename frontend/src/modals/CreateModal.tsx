@@ -4,6 +4,7 @@ import { Button } from "../components/Button";
 import { CrossIcon } from "../icons/CrossIcon";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
+import { AnimatePresence, motion } from "motion/react";
 
 export const CreateModal = ({
   open,
@@ -15,6 +16,7 @@ export const CreateModal = ({
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
   const [type, setType] = useState("youtube");
+  const [text, setText] = useState("");
 
   if (!open) return null;
 
@@ -27,6 +29,7 @@ export const CreateModal = ({
           title,
           link,
           type,
+          text,
         },
         {
           headers: {
@@ -50,43 +53,59 @@ export const CreateModal = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/20 backdrop-blur-md flex justify-center items-center z-50">
-      <div className="bg-white w-[400px] p-6 rounded-xl shadow-lg">
-        {/* Close Icon */}
-        <div className="flex justify-end">
-          <button onClick={onClose}>
-            <CrossIcon />
-          </button>
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        transition={{ duration: 0.2, ease: "easeInOut" }}
+        className="fixed inset-0 bg-black/20 backdrop-blur-md flex justify-center items-center z-50"
+      >
+        <div className="bg-white w-[400px] p-6 rounded-xl shadow-lg">
+          {/* Close Icon */}
+          <div className="flex justify-end">
+            <button onClick={onClose}>
+              <CrossIcon />
+            </button>
+          </div>
+
+          {/* Heading */}
+          <h2 className="text-2xl font-semibold text-center text-slate-700 mb-6">
+            Add Content
+          </h2>
+
+          {/* Input Fields */}
+          <form className="flex flex-col gap-5">
+            <Input
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <Input
+              placeholder="Text"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+            />
+            <Input
+              placeholder="Link"
+              value={link}
+              onChange={(e) => setLink(e.target.value)}
+            />
+            <SelectInput
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+            />
+
+            <Button
+              onClick={HandleSubmit}
+              variant="primary"
+              text="Submit"
+              startIcon={<></>}
+            />
+          </form>
         </div>
-
-        {/* Heading */}
-        <h2 className="text-2xl font-semibold text-center text-slate-700 mb-6">
-          Add Content
-        </h2>
-
-        {/* Input Fields */}
-        <div className="flex flex-col gap-5">
-          <Input
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <Input
-            placeholder="Link"
-            value={link}
-            onChange={(e) => setLink(e.target.value)}
-          />
-          <SelectInput value={type} onChange={(e) => setType(e.target.value)} />
-
-          <Button
-            onClick={HandleSubmit}
-            variant="primary"
-            text="Submit"
-            startIcon={<></>}
-          />
-        </div>
-      </div>
-    </div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

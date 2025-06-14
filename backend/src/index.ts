@@ -126,7 +126,7 @@ app.post(
   authMiddleware,
   async (req: Request, res: Response): Promise<any> => {
     try {
-      const { link, type, title } = req.body;
+      const { link, type, title, text } = req.body;
       const userId = (req as any).userId;
 
       if (!link || !type || !title) {
@@ -138,6 +138,7 @@ app.post(
         type,
         title,
         tags: [],
+        text,
         userId,
       });
 
@@ -180,7 +181,9 @@ app.delete(
   authMiddleware,
   async (req: Request, res: Response): Promise<any> => {
     const { contentId } = req.body;
+
     try {
+      console.log(contentId);
       if (!contentId) {
         return res.status(403).json({ message: "Content id is required" });
       }

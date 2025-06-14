@@ -4,8 +4,8 @@ import Navbar from "@/components/LandingPage/Navbar";
 
 function LandingPage() {
   return (
-    <div>
-      <div className="mb-20 space-y-2">
+    <div className="flex min-h-screen flex-col items-center justify-between bg-background px-4 md:px-0">
+      <div className="mb-20 space-y-2 ">
         <Navbar />
       </div>
       <div>

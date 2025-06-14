@@ -10,13 +10,14 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { motion } from "motion/react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 
 const Hero = () => {
   return (
-    <section className="bg-background px-4 md:px-0">
+    <section className="bg-background ">
       <div className="relative container py-32">
         <header className="mx-auto max-w-3xl text-center">
           <h1 className="font-inter text-5xl font-bold tracking-tight text-foreground md:text-6xl">
@@ -63,14 +64,30 @@ const Hero = () => {
           </p>
         </Badge>
 
-        <div className="relative mt-12 flex h-full w-full flex-col items-center justify-center">
-          <BrowserMockup
-            className="md:w-6xl"
-            url="https://brainwave.com/dashboard"
-            DahboardUrlDesktop="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/dashboard/dashboard-1.png"
-            DahboardUrlMobile="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/dashboard/dashboard-mobile-1.png"
-          />
-          <div className="absolute bottom-0 h-2/3 w-full bg-gradient-to-t from-white to-transparent dark:from-gray-900 dark:to-transparent" />
+        <div className="[perspective::1000px] [transform-style::preserver-3d] relative mt-12 flex h-full  w-full flex-col items-center justify-center">
+          <motion.div
+            initial={{ rotateY: -20, opacity: 0 }}
+            animate={{ rotateY: 0, opacity: 1, y: 20 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+            whileHover={{
+              rotateY: 10,
+              rotateX: 25,
+              boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
+              transition: { duration: 0.3, ease: "easeInOut" },
+            }}
+            style={{
+              translateZ: 100,
+            }}
+            className="rounded-t-4xl"
+          >
+            <BrowserMockup
+              className=" md:w-5xl"
+              url="https://brainwave.com/dashboard"
+              DahboardUrlDesktop="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/dashboard/dashboard-1.png"
+              DahboardUrlMobile="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/dashboard/dashboard-mobile-1.png"
+            />
+            <div className="absolute bottom-0 h-2/3 w-full bg-gradient-to-t from-white to-transparent dark:from-gray-900 dark:to-transparent" />
+          </motion.div>
         </div>
       </div>
     </section>
