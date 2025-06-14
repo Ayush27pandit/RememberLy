@@ -44,10 +44,7 @@ export const CreateModal = ({
         console.log("Failed to add the content", response.data);
       }
     } catch (error) {
-      console.error(
-        "Error during Adding Content",
-        error.response?.data || error.message
-      );
+      console.error("Error during Adding Content", error);
     }
     onClose();
   };

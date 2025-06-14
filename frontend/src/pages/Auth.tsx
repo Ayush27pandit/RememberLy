@@ -4,7 +4,11 @@ import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
-export const AuthPage = ({ setIsAuthenticated }) => {
+interface AuthPageProps {
+  setIsAuthenticated: (value: boolean) => void;
+}
+
+export const AuthPage = ({ setIsAuthenticated }: AuthPageProps) => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [errors, setErrors] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
@@ -17,10 +21,10 @@ export const AuthPage = ({ setIsAuthenticated }) => {
     setErrors({ email: "", password: "" }); // Clear errors when toggling
   };
 
-  const handleAuth = async (e) => {
+  const handleAuth = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = new FormData(e.target);
+    const formData = new FormData(e.target as HTMLFormElement);
     const username = formData.get("email");
     const password = formData.get("password");
 
@@ -46,14 +50,7 @@ export const AuthPage = ({ setIsAuthenticated }) => {
         navigate("/dashboard");
       }
     } catch (error) {
-      const errorMsg = error.response?.data?.message || "Something went wrong!";
-      if (errorMsg.toLowerCase().includes("email")) {
-        setErrors({ email: errorMsg, password: "" });
-      } else if (errorMsg.toLowerCase().includes("password")) {
-        setErrors({ email: "", password: errorMsg });
-      } else {
-        setErrors({ email: "", password: errorMsg });
-      }
+      console.error("Error during authentication:", error);
     } finally {
       setLoading(false); // Stop loading
     }

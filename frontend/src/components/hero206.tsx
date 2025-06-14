@@ -8,7 +8,6 @@ import {
   RotateCw,
   Share,
 } from "lucide-react";
-import React from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -34,15 +33,24 @@ const Hero206 = () => {
           className="mx-auto mt-10 flex w-fit cursor-pointer items-center justify-center rounded-full border py-1 pr-3 pl-2 font-normal transition-all ease-in-out hover:gap-3"
         >
           <Avatar className="relative -mr-5 overflow-hidden rounded-full border md:size-10">
-            <AvatarImage src="https://shadcnblocks.com/images/block/avatar-2.webp" alt="" />
+            <AvatarImage
+              src="https://shadcnblocks.com/images/block/avatar-2.webp"
+              alt=""
+            />
             <AvatarFallback>AB</AvatarFallback>
           </Avatar>
           <Avatar className="relative -mr-5 overflow-hidden rounded-full border md:size-10">
-            <AvatarImage src="https://shadcnblocks.com/images/block/avatar-5.webp" alt="" />
+            <AvatarImage
+              src="https://shadcnblocks.com/images/block/avatar-5.webp"
+              alt=""
+            />
             <AvatarFallback>AB</AvatarFallback>
           </Avatar>
           <Avatar className="relative -mr-5 overflow-hidden rounded-full border md:size-10">
-            <AvatarImage src="https://shadcnblocks.com/images/block/avatar-6.webp" alt="" />
+            <AvatarImage
+              src="https://shadcnblocks.com/images/block/avatar-6.webp"
+              alt=""
+            />
             <AvatarFallback>AB</AvatarFallback>
           </Avatar>
           <p className="ml-6 tracking-tight capitalize md:text-lg">
@@ -79,7 +87,7 @@ const BrowserMockup = ({
   <div
     className={cn(
       "relative w-full overflow-hidden rounded-4xl border",
-      className,
+      className
     )}
   >
     <div className="flex items-center justify-between gap-10 bg-muted px-8 py-4 lg:gap-25">
