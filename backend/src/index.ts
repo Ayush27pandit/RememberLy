@@ -20,6 +20,10 @@ app.use(express.urlencoded({ extended: true }));
 
 const PORT = process.env.PORT || 5000;
 
+app.get("/", (req, res) => {
+  res.send("Brainwave backend is running!");
+});
+
 const signupBody = zod.object({
   username: zod.string().email(),
   password: zod
