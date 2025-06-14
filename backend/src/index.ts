@@ -8,7 +8,7 @@ import bcrypt from "bcrypt";
 import { authMiddleware } from "./authMiddleware";
 import cors from "cors";
 
-dotenv.config({ path: "./src/.env" });
+dotenv.config();
 
 const jwt_string = process.env.JWT_SECRET as string;
 
@@ -17,6 +17,8 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+const PORT = process.env.PORT || 5000;
 
 const signupBody = zod.object({
   username: zod.string().email(),
@@ -257,4 +259,4 @@ app.get(
   }
 );
 
-app.listen(3000, () => console.log(" Server started on port 3000"));
+app.listen(PORT, () => console.log(` Server running on port ${PORT}`));

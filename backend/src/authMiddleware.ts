@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import { NextFunction, Request, Response } from "express";
 import { Users } from "./db";
 
-dotenv.config({ path: "./src/.env" });
+dotenv.config();
 
 const jwt_string = process.env.JWT_SECRET as string;
 export const authMiddleware = async (
